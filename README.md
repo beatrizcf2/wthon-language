@@ -68,3 +68,11 @@ IDIOM = ("portugues" | "english" | "deutsch" ) ;
 
 
 ```
+
+```dotnetcli
+
+bison --defines wthon.y
+lex wthon.l
+gcc -ll wthon.tab.c lex.yy.c
+./a.out
+```
