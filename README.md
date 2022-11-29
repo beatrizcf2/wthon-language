@@ -4,61 +4,71 @@ Wthon is a global language. This project will implement thre different idioms: E
 # Example
 
 ```py
---english;
-def HelloWorld(int n){
-    int x;
-    x = 0;
-    while (x < n){
-        print("Hello World: ");
-        print(x);
-        x = x + 1;
-    };
-};
-HelloWorld(5);
-
 
 --portugues;
-def OlaMundo(int n){
+funcao OlaMundo(int n){
     int x;
     x = 0;
     enquanto (x < n){
         imprime("Ola Mundo: ");
         imprime(x);
         x = x + 1;
-    };
-};
-OlaMundo(5);
-
+    }
+}
 
 --deutsch;
-def HalloWelt(int n){
+funktion HalloWelt(int n){
     int x;
     x = 0;
-    solange (x < n){
-        drucke("Hallo Welt: ");
-        drucke(x);
+    solange ((x < n)){
+        drucken("Hallo Welt: ");
+        drucken(x);
         x = x + 1;
-    };
-};
-HalloWelt(5);
+    }
+}
+
+--english;
+function HelloWorld(int n){
+    int x;
+    x = 0;
+    while (x < n){
+        print("Hello World: ");
+        print(x);
+        x = x + 1;
+    }
+}
+
+--portugues;
+funcao Principal(){
+    HelloWorld(1);
+    OlaMundo(1);
+    HalloWelt(1);
+}
 ```
 ## EBNF
 
 ```TXT
+PROGRAM = { DECLARATION }
+DECLARATION = (λ | IDIOM_SELECTOR), ("function"|"funcao"| "funktion"), IDENTIFIER,  "(" , FUNCVARDEC , ")" , BLOCK;
+IDIOM_SELECTOR = "--", ("english"| "portugues"| "deutsch")
+FUNCVARDEC = TYPE, IDENTIFIER, [{"," , TYPE, IDENTIFIER}];
+   
 BLOCK = "{", { STATEMENT }, "}";
-STATEMENT = ( λ | ASSIGMENT | PRINT | DECLARATION| WHILE | IF | BLOCK | DEFINITION | FUNCTION);
-DEFINITION = "def" , IDENTIFIER , "(" , DECLARATION , ")" , STATEMENT;
-FUNCTION = IDENTIFIER , "(" , (IDENTIFIER | RELATIVE_EXPRESSION) , [{"," , (IDENTIFIER | RELATIVE_EXPRESSION)}] , ")" ;
-ASSIGMENT = IDENTIFIER, "=", RELATIVE_EXPRESSION;
-PRINT = ("print | "imprime" | "drucken"), "(", RELATIVE_EXPRESSION, ")";
+
+STATEMENT = ( λ | ASSIGMENT | FUNCALL | PRINT | VARDEC | RETURN | WHILE | IF | BLOCK);
+FUNCALL = IDENTIFIER , "(" , RELATIVE_EXPRESSION , [{"," , RELATIVE_EXPRESSION}] , ")", ";" ;
+ASSIGMENT = IDENTIFIER, "=", RELATIVE_EXPRESSION, ";";
+PRINT = ("print | "imprime" | "drucken"), "(", RELATIVE_EXPRESSION, ")", ";";
+VARDEC = TYPE, IDENTIFIER, [{"," , IDENTIFIER}], ";";
+RETURN = ("return"|"retorna"|"gibzurueck"), ";";
 WHILE = ( "while" | "enquanto" | "solange" ) , "(", RELATIVE_EXPRESSION , ")" , STATEMENT ;
 IF = ( "if" | "se" | "wenn" ) , "(", RELATIVE_EXPRESSION , ")" , STATEMENT , [( "else" | "senao" | "sonst" ) , STATEMENT ] ;
-DECLARATION = TYPE, IDENTIFIER, [{"," , IDENTIFIER}]; 
-TYPE = ("int, str") ;
+TYPE = ("int, str");
+
 RELATIVE_EXPRESSION = EXPRESSION, { ( "==" | "<" | ">" ), EXPRESSION}; 
 EXPRESSION = TERM, { ("+" | "-" | ("or" | "ou" | "oder") ), TERM}; 
 TERM = FACTOR, { ("*" | "/" | ("and" | "e" | "und")), FACTOR};
-FACTOR = (("+" | "-" | ("not"| "nao" | "nicht")), FACTOR) | NUMBER | STRING | "(", RELATIVE_EXPRESSION, ")" | IDENTIFIER | "-", "-", IDIOM;
+FACTOR = (("+" | "-" | ("not"| "nao" | "nicht")), FACTOR) | NUMBER | STRING | "(", RELATIVE_EXPRESSION, ")" | IDENTIFIER | (IDENTIFIER, "(", [{RELATIVE_EXPRESSION, ","}], ")" );
 NUMBER = DIGIT, { DIGIT };
 DIGIT = ( 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0) ;
 STRING = LETTER, 
@@ -69,10 +79,7 @@ IDIOM = ("portugues" | "english" | "deutsch" ) ;
 
 ```
 
-```dotnetcli
 
-bison --defines wthon.y
-lex wthon.l
-gcc -ll wthon.tab.c lex.yy.c
-./a.out
-```
+# DIAGRAMA SINTÁTICO
+
+<img src="diagrama-sintático.png">
