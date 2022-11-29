@@ -11,7 +11,7 @@ x_1 = 2;
 x_1 = soma(1, x_1);
 
 x_1 = read();
-if ((x_1 > 1) and not(x_1 < 1)) {
+if ((x_1 > 1) and (x_1 < 1)) {
     x_1 = 3;
 }
 else {

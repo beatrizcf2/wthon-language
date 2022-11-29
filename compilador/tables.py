@@ -35,9 +35,13 @@ class FuncTable():
 
     @staticmethod
     def getter(name):
+        if name == 'Main':
+            name = ReservedTable.getMain()
+            try: 
+                return FuncTable.table[name]
+            except:
+                raise Exception("Main function not found in current idiom")
         try:
-            if name == 'Main':
-                name = ReservedTable.getMain()
             return FuncTable.table[name]
         except:
             raise Exception("Function not found")
@@ -110,14 +114,12 @@ class ReservedTable():
             ReservedTable.table = ReservedTable.german_table
         else:
             raise Exception("Idiom not found")
-        print(ReservedTable.table)
 
     @staticmethod
     def get(type, value):
         if ReservedTable.table[type] == value:
             return ReservedTable.table[type]
         else:
-            print(type, value)
             raise Exception("Reserved word not found in this idiom")
     
     @staticmethod

@@ -12,11 +12,11 @@ def main(code):
 
 if __name__=="__main__":
     import sys
-    # with open(sys.argv[1]) as f:
-    #     source = f.read()
-
-    with open('testes/isOdd.carbon') as f:
+    with open(sys.argv[1]) as f:
         source = f.read()
+
+    # with open('testes/teste2.carbon') as f:
+    #     source = f.read()
    
     code = PrePro.filter(source) + " eof"
     main(code)

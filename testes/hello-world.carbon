@@ -31,7 +31,8 @@ function HelloWorld(int n){
     }
 }
 
-function Main(){
+--portugues;
+funcao Principal(){
     HelloWorld(1);
     OlaMundo(1);
     HalloWelt(1);

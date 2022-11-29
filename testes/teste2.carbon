@@ -1,11 +1,11 @@
 --portugues;
 
-function Main()
+funcao Principal()
 {
 
   // Single var
   int x_1;
   x_1 = 1;
-  print(x_1);
+  imprime(x_1);
 
 }
