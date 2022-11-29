@@ -1,5 +1,5 @@
 # Wthon
-This language is a global language. This project will implement thre different idioms: English, German and Portuguese.
+Wthon is a global language. This project will implement thre different idioms: English, German and Portuguese.
 
 # Example
 
