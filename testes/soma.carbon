@@ -7,9 +7,9 @@ function soma(int x, int y) {
 
 function Main(){
     int a;
-    str b;
+    int orelha;
     a = 3;
-    b = soma(a,4);
+    orelha = soma(a,4);
     print(a);
-    print(b);
+    print(orelha);
 }

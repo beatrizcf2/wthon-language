@@ -3,6 +3,7 @@ from compilador.tokenizer import *
 
 class Parser:
     tokenizer = None
+    
 
     @staticmethod
     def parseProgram():
@@ -19,8 +20,17 @@ class Parser:
         # 0 - identifier
         # 1...n-2 - varDec
         # n-1 - block
+        if Parser.tokenizer.next.type == 'lang_sel':
+            Parser.tokenizer.selectNext()
+            ReservedTable.changeIdiom(Parser.tokenizer.next.value)
+            Parser.tokenizer.selectNext()
+            if Parser.tokenizer.next.type == 'semicolon':
+                Parser.tokenizer.selectNext()
+            else:
+                raise Exception("Expected semicolon after lang_sel")
         varDecs = []
         if Parser.tokenizer.next.type == 'function':
+            ReservedTable.get(Parser.tokenizer.next.type, Parser.tokenizer.next.value)
             Parser.tokenizer.selectNext()
             if Parser.tokenizer.next.type == 'identifier':
                 funcId = Identifier(Parser.tokenizer.next.value, [])
@@ -58,6 +68,8 @@ class Parser:
                     return FuncDec("function", filhos)
             else:
                 raise Exception("Expected identifier")
+        
+               
         else:
             raise Exception("Expected function")
 
@@ -126,6 +138,7 @@ class Parser:
 
                     
         elif Parser.tokenizer.next.type == 'print':
+            ReservedTable.get(Parser.tokenizer.next.type, Parser.tokenizer.next.value)
             Parser.tokenizer.selectNext()
             if Parser.tokenizer.next.type == 'open':
                 Parser.tokenizer.selectNext()
@@ -140,6 +153,7 @@ class Parser:
                         raise Exception('Expected ;')
 
         elif Parser.tokenizer.next.type == 'while':
+            ReservedTable.get(Parser.tokenizer.next.type, Parser.tokenizer.next.value)
             Parser.tokenizer.selectNext()
             if Parser.tokenizer.next.type == 'open':
                 Parser.tokenizer.selectNext()
@@ -149,6 +163,7 @@ class Parser:
                     token = While('While', [filho, Parser.parseStatement()])
                     return token
         elif Parser.tokenizer.next.type == 'if':
+            ReservedTable.get(Parser.tokenizer.next.type, Parser.tokenizer.next.value)
             Parser.tokenizer.selectNext()
             if Parser.tokenizer.next.type == 'open':
                 Parser.tokenizer.selectNext()
@@ -157,10 +172,12 @@ class Parser:
                     Parser.tokenizer.selectNext()
                     token = If('If', [filho, Parser.parseStatement()])
                     if Parser.tokenizer.next.type == 'else':
+                        ReservedTable.get(Parser.tokenizer.next.type, Parser.tokenizer.next.value)
                         Parser.tokenizer.selectNext()
                         token.children.append(Parser.parseStatement())
                     return token
         elif Parser.tokenizer.next.type == 'return':
+            ReservedTable.get(Parser.tokenizer.next.type, Parser.tokenizer.next.value)
             Parser.tokenizer.selectNext()
             token = Return('Return', [Parser.parseRelExpression()])
             if Parser.tokenizer.next.type == 'semicolon':
@@ -203,6 +220,7 @@ class Parser:
                 Parser.tokenizer.selectNext()
                 result = BinOp('-', [result, Parser.parseTerm()])
             elif Parser.tokenizer.next.type == 'or':
+                ReservedTable.get(Parser.tokenizer.next.type, Parser.tokenizer.next.value)
                 Parser.tokenizer.selectNext()
                 result = BinOp('||', [result, Parser.parseTerm()])
         return result
@@ -237,6 +255,7 @@ class Parser:
             Parser.tokenizer.selectNext()
             return UnOp('-', [Parser.parseFactor()])
         elif token.type == 'not' :
+            ReservedTable.get(Parser.tokenizer.next.type, Parser.tokenizer.next.value)
             Parser.tokenizer.selectNext()
             return UnOp('!', [Parser.parseFactor()])
         elif token.type == 'int':
@@ -264,6 +283,7 @@ class Parser:
                 Parser.tokenizer.selectNext()
                 return node 
         elif token.type == 'read':
+            ReservedTable.get(Parser.tokenizer.next.type, Parser.tokenizer.next.value)
             Parser.tokenizer.selectNext()
             if Parser.tokenizer.next.type == 'open':
                 Parser.tokenizer.selectNext()

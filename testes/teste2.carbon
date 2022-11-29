@@ -1,3 +1,5 @@
+--portugues;
+
 function Main()
 {
 

@@ -1,15 +1,15 @@
-fn soma(x: i32, y:i32) -> i32 {
-    var a: i32;
+function soma(int x, int y) {
+    int a;
     a = x+y;
-    Print(a);
+    print(a);
     return a;
 }
 
-fn Main(){
-    var a: i32;
-    var b: i32;
+function Main(){
+    int a;
+    int b;
     a = 3;
     b = soma(a,"erro");
-    Print(a);
-    Print(b);
+    print(a);
+    print(b);
 }

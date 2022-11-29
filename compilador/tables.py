@@ -18,7 +18,6 @@ class SymbolTable():
 
     def setter(self, name, value):
         # verifica se corresponde ao mesmo tipo
-        print(value)
         if self.table[name][1] != value[1]:
             raise Exception(f"{name} Variable type mismatch")
         self.table[name] = value
@@ -54,49 +53,68 @@ class ReservedTable():
         'if': 'if',
         'else': 'else',
         'while': 'while',
-        'int': 'int',
-        'str': 'str',
         'print': 'print',
         'return': 'return',
         'function': 'function',
         'and': 'and',
         'or': 'or',
         'not': 'not',
+        'read': 'read',
+        'int': 'int',
+        'str': 'str',
+        'Main': 'Main',
+        'eof': 'eof'
+        
     }
 
     portuguese_table = {
-        'se': 'if',
-        'senao': 'else',
-        'enquanto': 'while',
-        'int': 'int',
-        'str': 'str',
-        'imprime': 'print',
-        'retorna': 'return',
-        'funcao': 'function',
-        'e': 'and',
-        'ou': 'or',
-        'nao': 'not'
+        'if': 'se',
+        'else': 'senao',
+        'while': 'enquanto',
+        'print': 'imprime',
+        'return': 'retorne',
+        'function': 'funcao',
+        'and': 'e',
+        'or': 'ou',
+        'not': 'nao',
+        'read': 'leia',
+        'Main': 'Principal'
     }
 
     german_table = {
-        'wenn': 'if',
-        'sonst': 'else',
-        'solange': 'while',
-        'int': 'int',
-        'str': 'str',
-        'drucke': 'print',
-        'rückgabe': 'return',
-        'funktion': 'function',
-        'und': 'and',
-        'oder': 'or',
-        'nicht': 'not'
+        'if': 'wenn',
+        'else': 'sonst',
+        'while': 'solange',
+        'print': 'drucken',
+        'return': 'gibzurueck',
+        'function': 'funktion',
+        'and': 'und',
+        'or': 'oder',
+        'not': 'nicht',
+        'read': 'lese',
+        'Main': 'HauptProgramm'
     }
+    
+
+    table = english_table #default
 
     @staticmethod
-    def get(name, idiom):
+    def changeIdiom(idiom):
         if idiom == 'english':
-            return ReservedTable.english_table[name]
-        elif idiom == 'portuguese':
-            return ReservedTable.portuguese_table[name]
-        elif idiom == 'german':
-            return ReservedTable.german_table[name]
+            ReservedTable.table = ReservedTable.english_table
+        elif idiom == 'portugues':
+            ReservedTable.table = ReservedTable.portuguese_table
+        elif idiom == 'deutsch':
+            ReservedTable.table = ReservedTable.german_table
+        else:
+            raise Exception("Idiom not found")
+        print(ReservedTable.table)
+
+    @staticmethod
+    def get(type, value):
+        if ReservedTable.table[type] == value:
+            return ReservedTable.table[type]
+        else:
+            raise Exception("Reserved word not found in this idiom")
+
+    
