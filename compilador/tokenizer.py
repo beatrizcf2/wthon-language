@@ -147,9 +147,9 @@ class Tokenizer:
         elif self.source[self.position:self.position+7] == "imprime":
             self.next = Token('print', "imprime")
             self.position += 7
-        elif self.source[self.position:self.position+6] == "drucke":
-            self.next = Token('print', "drucke")
-            self.position += 6
+        elif self.source[self.position:self.position+7] == "drucken":
+            self.next = Token('print', "drucken")
+            self.position += 7
         
         elif self.source[self.position:self.position+6] == "return":
             self.next = Token('return', "return")
@@ -224,6 +224,7 @@ class Tokenizer:
             self.next = Token('int', int(value))
 
         self.isIdentifier()
+        #print(self.next.type, self.next.value)
         
 
     @staticmethod
@@ -232,7 +233,7 @@ class Tokenizer:
             'if', 'se', 'wenn',
             'else', 'senao', 'sonst',
             'while', 'enquanto', 'solange',
-            'print', 'imprime', 'drucke',
+            'print', 'imprime', 'drucken',
             'return', 'retorne', 'gibzurueck',
             'function', 'funcao', 'funktion',
             'and', 'und', 'e',
@@ -246,10 +247,11 @@ class Tokenizer:
         return word in reserved
 
     def isIdentifier(self):
-        if Tokenizer.isReserved(self.next.value) and self.source[self.position:self.position+1] != ' ' and self.next.type != 'print':
-            # print(self.next.type, self.next.value)
-            # print("debug: ", self.source[self.position:self.position+1])
-            # print("debug: ", Tokenizer.isReserved(self.next.value) and self.source[self.position:self.position+1] != ' ' )
+        special = ['+', '-', '*', '/', '(', ')', '{', '}', '=', '<', '>', ',', ';','.', ' ']
+        if Tokenizer.isReserved(self.next.value) and (self.source[self.position:self.position+1] not in special):
+            print(self.next.type, self.next.value)
+            print("debug: ", self.source[self.position:self.position+1])
+            print("debug: ", Tokenizer.isReserved(self.next.value) and self.source[self.position:self.position+1] != ' ' )
             self.position -= len(self.next.value)
             characters = self.source[self.position]
             self.position += 1
@@ -260,6 +262,7 @@ class Tokenizer:
                 if self.position < len(self.source):
                     character = self.source[self.position]
             self.next = Token('identifier', characters)
+            print(self.next.type, self.next.value)
 
         
 

@@ -10,12 +10,13 @@ funcao OlaMundo(int n){
 }
 
 --deutsch;
-funktion HalloWelt(int n){
+funktion HalloWelt(int printe){
     int x;
     x = 0;
-    solange (nicht(x < n)){
-        drucke("Hallo Welt: ");
-        drucke(x);
+    
+    solange ((x < printe)){
+        drucken("Hallo Welt: ");
+        drucken(x);
         x = x + 1;
     }
 }
@@ -24,7 +25,7 @@ funktion HalloWelt(int n){
 function HelloWorld(int n){
     int x;
     x = 0;
-    while (x < n){
+    while (not(x < n)){
         print("Hello World: ");
         print(x);
         x = x + 1;
