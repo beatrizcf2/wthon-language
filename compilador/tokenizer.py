@@ -101,6 +101,16 @@ class Tokenizer:
             self.next = Token('while', "solange")
             self.position += 7
 
+        elif self.source[self.position:self.position+4] == "else":
+            self.next = Token('else', "else")
+            self.position += 4
+        elif self.source[self.position:self.position+5] == "senao":
+            self.next = Token('else', "senao")
+            self.position += 5
+        elif self.source[self.position:self.position+5] == "sonst":
+            self.next = Token('else', "sonst")
+            self.position += 5
+            
         elif self.source[self.position:self.position+2] == "if":
             self.next = Token('if', "if")
             self.position += 2
@@ -111,15 +121,6 @@ class Tokenizer:
             self.next = Token('if', "wenn")
             self.position += 4
 
-        elif self.source[self.position:self.position+4] == "else":
-            self.next = Token('else', "else")
-            self.position += 4
-        elif self.source[self.position:self.position+5] == "senao":
-            self.next = Token('else', "senao")
-            self.position += 5
-        elif self.source[self.position:self.position+5] == "sonst":
-            self.next = Token('else', "sonst")
-            self.position += 5
 
         elif self.source[self.position:self.position+4] == "read":
             self.next = Token('read', "read")

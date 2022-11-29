@@ -36,6 +36,8 @@ class FuncTable():
     @staticmethod
     def getter(name):
         try:
+            if name == 'Main':
+                name = ReservedTable.getMain()
             return FuncTable.table[name]
         except:
             raise Exception("Function not found")
@@ -115,6 +117,11 @@ class ReservedTable():
         if ReservedTable.table[type] == value:
             return ReservedTable.table[type]
         else:
+            print(type, value)
             raise Exception("Reserved word not found in this idiom")
+    
+    @staticmethod
+    def getMain():
+        return ReservedTable.table['Main']
 
     
